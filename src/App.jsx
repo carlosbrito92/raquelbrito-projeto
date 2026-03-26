@@ -1,3 +1,4 @@
+import StudentPortal from './views/StudentPortal';
 import { useState, useEffect } from 'react';
 import HomeView from './views/HomeView';
 import StudentSelect from './views/StudentSelect';
@@ -53,6 +54,7 @@ export default function App() {
       
       {/* 2. Telas do Aluno */}
       {view === 'StudentSelect' && <StudentSelect nav={nav} students={students} />}
+      {view === 'StudentPortal' && <StudentPortal nav={nav} student={selectedStudent} />}
       
       {/* (O StudentPortal vai entrar aqui depois!) */}
 
