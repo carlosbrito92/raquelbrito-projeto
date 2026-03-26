@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Plus, ChevronRight } from 'lucide-react';
+import { Users, Plus, ChevronRight, BarChart2 } from 'lucide-react';
 
 export default function TrainerHome({ nav, students }) {
   return (
@@ -34,7 +34,30 @@ export default function TrainerHome({ nav, students }) {
                 </span>
               </div>
             </div>
-            <ChevronRight className="text-gray-400" />
+            
+            {/* AQUI ESTÁ A ALTERAÇÃO: Botões de atalho rápidos */}
+            <div className="flex items-center gap-1">
+              <button 
+                onClick={(e) => { 
+                  e.stopPropagation(); // Evita que o clique abra a tela de plano
+                  nav('DashboardView', student); 
+                }} 
+                className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-full transition-colors"
+                title="Ver Dashboard"
+              >
+                <BarChart2 size={20} />
+              </button>
+              <button 
+                onClick={(e) => { 
+                  e.stopPropagation(); 
+                  nav('PlanView', student); 
+                }} 
+                className="p-2 text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-full transition-colors"
+                title="Ver Treino"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
           </div>
         ))}
       </main>
