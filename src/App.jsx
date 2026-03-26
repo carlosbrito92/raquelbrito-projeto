@@ -1,3 +1,4 @@
+import PlanView from './views/PlanView';
 import { useState, useEffect } from 'react';
 import TrainerHome from './views/TrainerHome';
 import AddStudent from './views/AddStudent';
@@ -52,12 +53,7 @@ export default function App() {
       
       {view === 'AddStudent' && <AddStudent nav={nav} onAdd={handleAddStudent} />}
 
-      {view === 'PlanView' && (
-        <div className="p-4 max-w-md mx-auto">
-          <button onClick={() => nav('TrainerHome')} className="mb-4 text-blue-600">← Voltar</button>
-          <h2 className="text-xl font-bold">Plano de Treino: {selectedStudent?.name}</h2>
-        </div>
-      )}
+      {view === 'PlanView' && <PlanView nav={nav} student={selectedStudent} />}
     </div>
   );
 }
