@@ -1,18 +1,19 @@
-import PlanView from './views/PlanView';
 import { useState, useEffect } from 'react';
+import HomeView from './views/HomeView';
+import StudentSelect from './views/StudentSelect';
 import TrainerHome from './views/TrainerHome';
 import AddStudent from './views/AddStudent';
+import PlanView from './views/PlanView';
 import { storage } from './lib/storage';
 
 export default function App() {
-  const [view, setView] = useState('TrainerHome');
+  // Alteramos aqui: O app agora começa na HomeView, não mais na TrainerHome
+  const [view, setView] = useState('HomeView');
   const [selectedStudent, setSelectedStudent] = useState(null);
   
-  // Começamos com array vazio e um estado de loading
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Busca os dados no Firebase ao carregar o App pela primeira vez
   useEffect(() => {
     async function loadData() {
       const data = await storage.get('pt_students');
@@ -31,11 +32,7 @@ export default function App() {
 
   const handleAddStudent = async (newStudent) => {
     const updatedList = [...students, newStudent];
-    
-    // 1. Persistência assíncrona otimista: atualiza a UI instantaneamente
     setStudents(updatedList);
-    
-    // 2. Salva no Firestore em background usando a chave definida na arquitetura
     await storage.set('pt_students', updatedList);
   };
 
@@ -47,13 +44,23 @@ export default function App() {
     );
   }
 
+  // AQUI ESTÁ A MÁGICA DO ROTEAMENTO
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
-      {view === 'TrainerHome' && <TrainerHome nav={nav} students={students} />}
       
-      {view === 'AddStudent' && <AddStudent nav={nav} onAdd={handleAddStudent} />}
+      {/* 1. Telas Iniciais (Porta de entrada) */}
+      {view === 'HomeView' && <HomeView nav={nav} />}
+      
+      {/* 2. Telas do Aluno */}
+      {view === 'StudentSelect' && <StudentSelect nav={nav} students={students} />}
+      
+      {/* (O StudentPortal vai entrar aqui depois!) */}
 
+      {/* 3. Telas do Personal Trainer */}
+      {view === 'TrainerHome' && <TrainerHome nav={nav} students={students} />}
+      {view === 'AddStudent' && <AddStudent nav={nav} onAdd={handleAddStudent} />}
       {view === 'PlanView' && <PlanView nav={nav} student={selectedStudent} />}
+
     </div>
   );
 }
