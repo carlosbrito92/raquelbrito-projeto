@@ -1,3 +1,4 @@
+import DashboardView from './views/DashboardView';
 import StudentPortal from './views/StudentPortal';
 import { useState, useEffect } from 'react';
 import HomeView from './views/HomeView';
@@ -62,6 +63,7 @@ export default function App() {
       {view === 'TrainerHome' && <TrainerHome nav={nav} students={students} />}
       {view === 'AddStudent' && <AddStudent nav={nav} onAdd={handleAddStudent} />}
       {view === 'PlanView' && <PlanView nav={nav} student={selectedStudent} />}
+      {view === 'DashboardView' && <DashboardView nav={nav} student={selectedStudent} />}
 
     </div>
   );
