@@ -13,3 +13,10 @@ export function getExpected(base, rate, week) {
   // Demais semanas (progressão exponencial)
   return Math.round(base * Math.pow(1 + r, week - 1) * 10) / 10;
 }
+
+// NOVA FUNÇÃO: Cálculo de Volume Total
+// Baseado na regra do ProjetoRaquel.md: Volume = carga (kg) × séries × repetições
+export function calcVol(load, series, reps) {
+  if (!load || load <= 0) return 0;
+  return Math.round(load * series * reps);
+}
