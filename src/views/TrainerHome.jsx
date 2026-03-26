@@ -1,31 +1,7 @@
 import React from 'react';
 import { Users, Plus, ChevronRight } from 'lucide-react';
 
-const MOCK_STUDENTS = [
-  { 
-    id: 'a1b2c3', 
-    name: 'João Silva', 
-    objective: 'Hipertrofia', 
-    progressionRate: 10, 
-    createdAt: '2026-03-20T10:00:00Z' 
-  },
-  { 
-    id: 'x9y8z7', 
-    name: 'Maria Souza', 
-    objective: 'Força', 
-    progressionRate: 5, 
-    createdAt: '2026-03-22T14:30:00Z' 
-  },
-  { 
-    id: 'm4n5p6', 
-    name: 'Carlos Santos', 
-    objective: 'Resistência', 
-    progressionRate: 15, 
-    createdAt: '2026-03-25T09:15:00Z' 
-  }
-];
-
-export default function TrainerHome({ nav }) {
+export default function TrainerHome({ nav, students }) {
   return (
     <div className="max-w-md mx-auto p-4">
       <header className="flex justify-between items-center mb-6">
@@ -43,7 +19,7 @@ export default function TrainerHome({ nav }) {
       </header>
 
       <main className="flex flex-col gap-3">
-        {MOCK_STUDENTS.map(student => (
+        {students.map(student => (
           <div 
             key={student.id}
             onClick={() => nav('PlanView', student)}
