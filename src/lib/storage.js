@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 export const storage = {
@@ -12,6 +12,7 @@ export const storage = {
       return null;
     }
   },
+
   async set(key, value) {
     try {
       const docRef = doc(db, 'app_data', key);
@@ -19,6 +20,17 @@ export const storage = {
       return true;
     } catch (error) {
       console.error(`Erro ao salvar ${key}:`, error);
+      return false;
+    }
+  },
+
+  async del(key) {
+    try {
+      const docRef = doc(db, 'app_data', key);
+      await deleteDoc(docRef);
+      return true;
+    } catch (error) {
+      console.error(`Erro ao deletar ${key}:`, error);
       return false;
     }
   }
