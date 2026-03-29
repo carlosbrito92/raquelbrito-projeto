@@ -1,5 +1,19 @@
-import React from 'react';
-import { Users, Plus, ChevronRight, BarChart2, Trash2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Users, Plus, ChevronRight, BarChart2, Trash2, Eye, EyeOff } from 'lucide-react';
+
+function PinBadge({ pin }) {
+  const [visible, setVisible] = useState(false);
+  return (
+    <button
+      onClick={(e) => { e.stopPropagation(); setVisible(v => !v); }}
+      className="flex items-center gap-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-2 py-0.5 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+      title={visible ? 'Ocultar PIN' : 'Ver PIN'}
+    >
+      {visible ? <EyeOff size={11} /> : <Eye size={11} />}
+      {visible ? pin : '••••'}
+    </button>
+  );
+}
 
 export default function TrainerHome({ nav, students, onDelete }) {
   const handleDelete = (e, student) => {
@@ -39,17 +53,18 @@ export default function TrainerHome({ nav, students, onDelete }) {
           >
             <div>
               <h2 className="font-semibold text-lg">{student.name}</h2>
-              <div className="flex gap-2 text-sm text-gray-500 dark:text-gray-400 mt-1">
+              <div className="flex flex-wrap gap-2 text-sm text-gray-500 dark:text-gray-400 mt-1">
                 <span className="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-md">
                   {student.objective}
                 </span>
                 <span className="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-md">
                   +{student.progressionRate}%/sem
                 </span>
+                {student.pin && <PinBadge pin={student.pin} />}
               </div>
             </div>
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 flex-shrink-0 ml-2">
               <button
                 onClick={(e) => { e.stopPropagation(); nav('DashboardView', student); }}
                 className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-full transition-colors"
